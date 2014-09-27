@@ -1,19 +1,19 @@
 var async = require('async')
 var bcrypt = require('bcrypt')
+var byteup = require('byteup')
 var levelup = require('levelup')
 var through = require('through')
-var bytewise = require('bytewise')
 
 var PREFIX = "user:"
 
 // Turn an email into a key
 function k(email) {
-  return bytewise.encode([PREFIX, email]);
+  return [PREFIX, email]
 }
 
 // Turn a key into an email
 function dk(k) {
-  return bytewise.decode(k)[1]
+  return k[1]
 }
 
 function genTimestamp(dt) {
@@ -61,8 +61,10 @@ module.exports = function(db) {
     name = db
   }
   if (!db || typeof db === 'string') {
+    // Install the bytewise leveldb plugin
+    byteup()
     db = levelup(name, {
-      keyEncoding: 'binary',
+      keyEncoding: 'bytewise',
       valueEncoding: 'json'
     })
   }
@@ -84,7 +86,7 @@ module.exports = function(db) {
       if (err) return cb(err)
       user.modifiedDate = new Date(user.modifiedTimestamp.unixtime)
       user.createdDate = new Date(user.createdTimestamp.unixtime)
-      user.email = email;
+      user.email = email
 
       return cb(null, user)
     })
@@ -137,8 +139,7 @@ module.exports = function(db) {
         user.modifiedTimestamp = genTimestamp()
         self.batch()
           .del(k(email))
-          // it's strange that we have to specify the valueEnconding here again
-          .put(k(newEmail), user, {valueEncoding: "json"})
+          .put(k(newEmail), user)
           .write(function(err) {
             done()
             cb(err)
@@ -161,7 +162,7 @@ module.exports = function(db) {
             return cb(err)
           }
           userObj.modifiedTimestamp = genTimestamp()
-          userObj.data = user.data;
+          userObj.data = user.data
           self.put(k(email), userObj, function(err) {
             done()
             cb(err)
@@ -179,7 +180,7 @@ module.exports = function(db) {
     var self = this
     writeQ.push(function(done) {
       self.findUser(email, function(err, user) {
-        if (err) {
+        if (err) { 
           done()
           return cb(err)
         }
@@ -198,7 +199,7 @@ module.exports = function(db) {
       var u = data.value
       u.modifiedDate = new Date(u.modifiedTimestamp.unixtime)
       u.createdDate = new Date(u.createdTimestamp.unixtime)
-      u.email = dk(data.key);
+      u.email = dk(data.key)
       this.queue(u)
     }))
   }).bind(db)
