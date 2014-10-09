@@ -13,7 +13,10 @@ function k(email) {
 
 // Turn a key into an email
 function dk(k) {
-  return k[1]
+  if (typeof k === 'string') {
+    var re = new RegExp('^' + PREFIX + ',')
+    return k.replace(re, '')
+  } else return k[1]
 }
 
 function genTimestamp(dt) {
