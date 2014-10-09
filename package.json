@@ -1,5 +1,5 @@
 {
-  "name": "level-userdb",
+  "name": "ix-level-userdb",
   "version": "0.2.2",
   "description": "LevelDB-backed user database for things like web applications",
   "main": "db.js",
