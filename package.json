@@ -1,6 +1,6 @@
 {
   "name": "ix-level-userdb",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "LevelDB-backed user database for things like web applications",
   "main": "db.js",
   "scripts": {
