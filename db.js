@@ -1,14 +1,12 @@
 var async = require('async')
 var bcrypt = require('bcrypt')
-var byteup = require('byteup')
-var levelup = require('levelup')
 var through = require('through')
 
 var PREFIX = "user:"
 
 // Turn an email into a key
 function k(email) {
-  return [PREFIX, email]
+  return [PREFIX, email].join('')
 }
 
 // Turn a key into an email
@@ -59,19 +57,6 @@ function buildUser(password, data, cb, insecure) {
 
 // DB can be a string, undefined or an existing LevelUP-compatible object
 module.exports = function(db) {
-  var name = "./level-userdb.db"
-  if (typeof db === 'string') {
-    name = db
-  }
-  if (!db || typeof db === 'string') {
-    // Install the bytewise leveldb plugin
-    byteup()
-    db = levelup(name, {
-      keyEncoding: 'bytewise',
-      valueEncoding: 'json'
-    })
-  }
-
   // Set up the write queue with concurrency of 1.
   // This serializes write-after-read operations.
   // We could make this more fine-grained by making per-account queues.
