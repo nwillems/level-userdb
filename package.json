@@ -20,8 +20,8 @@
     "userdb"
   ],
   "dependencies": {
-    "bcrypt": "~0.7.6",
     "async": "~0.2.9",
+    "bcrypt": "^0.8.5",
     "through": "~2.3.4"
   },
   "devDependencies": {
