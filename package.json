@@ -21,7 +21,7 @@
   ],
   "dependencies": {
     "async": "~0.2.9",
-    "bcrypt": "^0.8.5",
+    "bcrypt": "^3.0.0",
     "through": "~2.3.4"
   },
   "devDependencies": {
