@@ -1,6 +1,6 @@
 var async = require('async')
 var bcrypt = require('bcrypt')
-var levelup = require('levelup')
+var level = require('level')
 var through = require('through')
 var bytewise = require('bytewise')
 
@@ -61,7 +61,7 @@ module.exports = function(db) {
     name = db
   }
   if (!db || typeof db === 'string') {
-    db = levelup(name, {
+    db = level(name, {
       keyEncoding: 'binary',
       valueEncoding: 'json'
     })
