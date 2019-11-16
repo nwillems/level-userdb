@@ -2,6 +2,9 @@ var async = require('async')
 var db = require('../db')
 var expect = require('chai').expect
 var rimraf = require('rimraf')
+var levelMem = require('level-mem')
+
+var memDB = levelMem('mem', {valueEncoding: 'json'})
 
 describe('db', function() {
 
@@ -17,7 +20,7 @@ describe('db', function() {
 
   before(function(done) {
     rimraf('level-userdb.db', function() {
-      dbi = db()
+      dbi = db(memDB)
       dbi.addUser(existantEmail, password, data, function() {
         done()
       })

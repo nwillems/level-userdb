@@ -1,6 +1,6 @@
 {
-  "name": "level-userdb",
-  "version": "0.2.2",
+  "name": "ix-level-userdb",
+  "version": "1.0.1",
   "description": "LevelDB-backed user database for things like web applications",
   "main": "db.js",
   "scripts": {
@@ -21,14 +21,13 @@
   ],
   "dependencies": {
     "async": "~0.2.9",
-    "bcrypt": "~3.0.0",
-    "bytewise": "~0.6.1",
-    "level": "^6.0.0",
+    "bcrypt": "^0.8.5",
     "through": "~2.3.4"
   },
   "devDependencies": {
     "chai": "~1.7.2",
-    "mocha": "^6.2.2",
+    "level-mem": "^0.18.0",
+    "mocha": "~1.12.0",
     "rimraf": "~2.2.0"
   }
 }
